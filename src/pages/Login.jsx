@@ -53,7 +53,7 @@ function Login() {
         <Avatar
           sx={{
             margin: 1,
-            backgroundColor: "green",
+            backgroundColor: "red",
           }}
         >
           <LockOutlinedIcon />
@@ -97,7 +97,7 @@ function Login() {
             sx={{
               mt: 3,
               mb: 2,
-              backgroundColor: "green",
+              backgroundColor: "red",
             }}
           >
             Entrar
@@ -108,7 +108,7 @@ function Login() {
             sx={{
               mt: 3,
               mb: 2,
-              backgroundColor: "green",
+              backgroundColor: "red",
             }}>
             <Link to="/cadastro">Cadastro</Link>
           </Button>

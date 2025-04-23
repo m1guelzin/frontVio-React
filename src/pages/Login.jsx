@@ -102,15 +102,13 @@ function Login() {
           >
             Entrar
           </Button>
-          <Button type="submit"
+          <Button
             fullWidth
             variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              backgroundColor: "red",
-            }}>
-            <Link to="/cadastro">Cadastro</Link>
+            sx={{ mt: 3, mb: 2, backgroundColor: "red" }}
+            onClick={() => navigate("/cadastro")}
+          >
+            CADASTRO
           </Button>
         </Box>
         

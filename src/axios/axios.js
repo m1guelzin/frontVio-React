@@ -10,7 +10,9 @@ const api = axios.create({
 const sheets = {
     getUsers:()=>api.get("user"),
     postLogin:(user) => api.post("login/", user),
-    deleteUser:(id_usuario) => api.delete("user/" + id_usuario)
+    deleteUser:(id_usuario) => api.delete("user/" + id_usuario),
+    getEvents:()=>api.get("evento"),
+    deleteEvent:(id_usuario) => api.delete("evento/" + id_usuario),
 }
 
 export default sheets;

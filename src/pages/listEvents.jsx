@@ -10,9 +10,11 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import api from "../axios/axios";
-import { Button, IconButton, Alert, Snackbar} from "@mui/material";
+import { Button, IconButton, Alert, Snackbar } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete"
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import ModalCriarIngresso from "../components/ModalCriarIngresso";
 
 function listEvents() {
   const [events, setEvents] = useState([]);
@@ -24,17 +26,17 @@ function listEvents() {
     severity: "",
 
     // Mensagem que sera exibida
-    message: ""
+    message: "",
   });
 
   //função para exibir o alerta
   const showAlert = (severity, message) => {
-    setAlert({open: true, severity, message})
-  }
+    setAlert({ open: true, severity, message });
+  };
 
   const handleCloseAlert = () => {
-    setAlert({ ...alert, open: false})
-  }
+    setAlert({ ...alert, open: false });
+  };
 
   const navigate = useNavigate();
   async function getEvents() {
@@ -50,16 +52,15 @@ function listEvents() {
     );
   }
 
-  async function deleteEvent(id){
-    try{
+  async function deleteEvent(id) {
+    try {
       await api.deleteEvent(id);
       await getEvents();
       // mensagem informativa
-      showAlert("success", "Evento Excluido com Sucesso!")
-    }
-    catch(error){
-      console.log("Erro ao deletar usuário...", error)
-      showAlert("error", error.response.data.error)
+      showAlert("success", "Evento Excluido com Sucesso!");
+    } catch (error) {
+      console.log("Erro ao deletar usuário...", error);
+      showAlert("error", error.response.data.error);
     }
   }
 
@@ -73,22 +74,26 @@ function listEvents() {
 
         <TableCell align="center">
           <IconButton onClick={() => deleteEvent(event.id_evento)}>
-            <DeleteIcon color="error"/>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </TableCell>
+        <TableCell align="center">
+          <IconButton onClick={() => abrirModalIngresso(event)}>
+            <AddIcon color="black" />
           </IconButton>
         </TableCell>
       </TableRow>
     );
   });
 
-  function logout(){
+  function logout() {
     localStorage.removeItem("authenticated");
-    navigate("/")
+    navigate("/");
   }
 
-  function redUsers(){
-    navigate("/users")
+  function redUsers() {
+    navigate("/users");
   }
-
 
   useEffect(() => {
     // if (!localStorage.getItem("authenticated")) {
@@ -97,20 +102,43 @@ function listEvents() {
     getEvents();
   }, []);
 
+  const [eventoSelecionado, setEventoSelecionado] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const abrirModalIngresso = (evento) => {
+    setEventoSelecionado(evento);
+    setModalOpen(true);
+  };
+
+  const fecharModalIngresso = () => {
+    setModalOpen(false);
+    setEventoSelecionado("");
+  };
+
   return (
     <div>
-    <Snackbar open={alert.open}
-    autoHideDuration={3000}
-    onClose={handleCloseAlert}
-    anchorOrigin={{vertical:"top", horizontal:"center"}}>
-      <Alert onClose={handleCloseAlert} 
-      severity={alert.severity}
-      sx={{
-        width: "100%"
-      }}>
-        {alert.message}
-      </Alert>
-    </Snackbar>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity={alert.severity}
+          sx={{
+            width: "100%",
+          }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
+
+      <ModalCriarIngresso
+        open={modalOpen}
+        onClose={fecharModalIngresso}
+        eventoSelecionado={eventoSelecionado}
+      />
 
       {events.length === 0 ? (
         <h1>Carregando Eventos</h1>
@@ -127,23 +155,20 @@ function listEvents() {
                   <TableCell align="center">Descrição</TableCell>
                   <TableCell align="center">Data e Hora</TableCell>
                   <TableCell align="center">Local</TableCell>
-                  <TableCell align="center">Ações</TableCell>
+                  <TableCell align="center">Excluir</TableCell>
+                  <TableCell align="center">Criar Ingresso</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{listEvents}</TableBody>
             </Table>
           </TableContainer>
-          <Button fullWidth variant="contained" 
-          to = "/"
-          onClick={logout}>
+          <Button fullWidth variant="contained" to="/" onClick={logout}>
             SAIR
           </Button>
           <div>
             <br />
           </div>
-          <Button fullWidth variant="contained" 
-          to = "/events"
-          onClick={redUsers}>
+          <Button fullWidth variant="contained" to="/events" onClick={redUsers}>
             USUARIOS
           </Button>
         </div>

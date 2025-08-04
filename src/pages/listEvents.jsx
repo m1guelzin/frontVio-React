@@ -95,6 +95,11 @@ function listEvents() {
     navigate("/users");
   }
 
+  function redCriarEvento() {
+    navigate("/createEvent");
+  }
+
+
   useEffect(() => {
     // if (!localStorage.getItem("authenticated")) {
     //   navigate("/");
@@ -170,6 +175,12 @@ function listEvents() {
           </div>
           <Button fullWidth variant="contained" to="/events" onClick={redUsers}>
             USUARIOS
+          </Button>
+          <div>
+            <br />
+          </div>
+          <Button fullWidth variant="contained"  to="/createEvent" onClick={redCriarEvento}>
+            CRIAR EVENTO
           </Button>
         </div>
       )}

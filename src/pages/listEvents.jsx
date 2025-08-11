@@ -72,6 +72,17 @@ function listEvents() {
         <TableCell align="center">{event.data_hora}</TableCell>
         <TableCell align="center">{event.local}</TableCell>
 
+        <TableCell>
+          <img
+            src={`http://localhost:5000/api/v1/evento/imagem/${event.id_evento}`}
+            alt="Imagem do Evento"
+            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+          />
+        </TableCell>
+        <TableCell align="center">
+          {event.tipo_imagem}
+        </TableCell>
+
         <TableCell align="center">
           <IconButton onClick={() => deleteEvent(event.id_evento)}>
             <DeleteIcon color="error" />
@@ -98,7 +109,6 @@ function listEvents() {
   function redCriarEvento() {
     navigate("/createEvent");
   }
-
 
   useEffect(() => {
     // if (!localStorage.getItem("authenticated")) {
@@ -160,6 +170,10 @@ function listEvents() {
                   <TableCell align="center">Descrição</TableCell>
                   <TableCell align="center">Data e Hora</TableCell>
                   <TableCell align="center">Local</TableCell>
+
+                  <TableCell>IMAGEM</TableCell>
+                  <TableCell>Tipo da Imagem</TableCell>
+
                   <TableCell align="center">Excluir</TableCell>
                   <TableCell align="center">Criar Ingresso</TableCell>
                 </TableRow>
@@ -179,7 +193,12 @@ function listEvents() {
           <div>
             <br />
           </div>
-          <Button fullWidth variant="contained"  to="/createEvent" onClick={redCriarEvento}>
+          <Button
+            fullWidth
+            variant="contained"
+            to="/createEvent"
+            onClick={redCriarEvento}
+          >
             CRIAR EVENTO
           </Button>
         </div>

@@ -109,6 +109,10 @@ function listEvents() {
   function redCriarEvento() {
     navigate("/createEvent");
   }
+  
+    function redDash() {
+    navigate("/dashboard");
+  }
 
   useEffect(() => {
     // if (!localStorage.getItem("authenticated")) {
@@ -200,6 +204,17 @@ function listEvents() {
             onClick={redCriarEvento}
           >
             CRIAR EVENTO
+          </Button>
+          <div>
+            <br />
+          </div>
+          <Button
+            fullWidth
+            variant="contained"
+            to="/dashboard"
+            onClick={redDash}
+          >
+            DASHBOARD
           </Button>
         </div>
       )}
